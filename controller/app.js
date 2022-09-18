@@ -22,7 +22,6 @@ app.get("/getAllUsers/", function(req,res){
         if(err){
             res.status(500).send({"Error":"Internal Server Error"})
         } else{
-            console.log(result)
             res.status(200).send(result);
         }
     })
@@ -35,11 +34,48 @@ app.get("/getUser/:id", function(req,res){
         if(err){
             res.status(500).send({"Error":"Internal Server Error"})
         } else{
-            console.log(result)
             res.status(200).send(result);
         }
     })
 })
+
+//Endpoint 3 (Create User)
+app.post("/createUser/", function(req,res){
+    users.createUser(req.body, function(err,result){
+        if(err){
+            console.log(err)
+            res.status(500).send({"Error":"Internal Server Error"})
+        } else{
+            res.status(200).send(result)
+        }
+    });
+})
+
+//Endpoint 4 (Delete User)
+app.delete("/deleteUser/:id", function(req,res){
+    let userid = req.params.id
+    users.deleteUser(userid, function(err,result){
+        if(err){
+            res.status(500).send({"Error":"Internal Server Error"})
+        } else{
+            res.status(200).send(result)
+        }
+    });
+})
+
+//Endpoint 4 (Delete User)
+app.put("/updateUser/:id", function(req,res){
+    let userid = req.params.id;
+    users.updateUser(userid, req.body, function(err,result){
+        if(err){
+            console.log(err)
+            res.status(500).send({"Error":"Internal Server Error"})
+        } else{
+            res.status(200).send(result)
+        }
+    });
+})
+
 
 
 module.exports = app;
